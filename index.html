@@ -77,6 +77,9 @@
     <button class="clrButton" id="green">Groen</button>
     <button class="clrButton" id="blue">Blauw</button>
 
+    <button class="rankButton" id="client">Client</button>
+    <button class="rankButton" id="Host">Host</button>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
 
@@ -95,6 +98,31 @@
         var input = document.getElementById('input');
 
         const colorButtons = document.querySelectorAll('.clrButton');
+
+        const clientButton = document.querySelectorAll('.rankButton')[0];
+        const hostButton = document.querySelectorAll('.rankButton')[1];
+
+        clientButton.addEventListener('click', joinRoom);
+        hostButton.addEventListener('click', createRoom);
+
+        function createRoom() {
+            console.log('New Room: ' + generateId(10));
+        }
+
+        function joinRoom() {
+            console.log('Trying to join room');
+        }
+
+        function generateId(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() *
+                    charactersLength));
+            }
+            return result;
+        }
 
         colorButtons.forEach(btn => {
             btn.addEventListener('click', () => {
