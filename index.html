@@ -60,6 +60,7 @@
         }
 
         #typing {
+
             background-color: pink;
         }
     </style>
@@ -80,7 +81,7 @@
         let username = 'Test user';
 
         function getUsername() {
-            username = window.prompt("Username");
+            username = window.prompt("Username", "Roy ");
         }
 
         window.addEventListener('load', getUsername);
@@ -101,12 +102,17 @@
         });
 
         input.addEventListener('input', function (e) {
-            socket.emit('status', username, "typing");
+            if (!input.value) {
+                socket.emit('status', username, "done");
+
+            } else {
+                socket.emit('status', username, "typing");
+            }
         })
 
         socket.on('chat message', function (username, msg) {
             var item = document.createElement('li');
-            item.textContent = username + ": " + msg;
+            item.innerHTML = "<strong>" + username + "</strong>: " + msg;
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });

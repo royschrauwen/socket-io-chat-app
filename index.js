@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
   });
   socket.on("status", (username, msg) => {
     io.emit("status", username, msg);
-    console.log("status: " + username + " is " + msg);
+    //console.log("status: " + username + " is " + msg);
   });
 });
 
