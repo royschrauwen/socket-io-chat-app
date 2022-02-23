@@ -73,7 +73,9 @@
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
 
-
+    <button class="clrButton" id="red">Rood</button>
+    <button class="clrButton" id="green">Groen</button>
+    <button class="clrButton" id="blue">Blauw</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -91,6 +93,20 @@
         var messages = document.getElementById('messages');
         var form = document.getElementById('form');
         var input = document.getElementById('input');
+
+        const colorButtons = document.querySelectorAll('.clrButton');
+
+        colorButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setBackgroundColor(btn.id);
+            });
+        });
+
+        function setBackgroundColor(color) {
+            //document.querySelector('body').style.backgroundColor = color;
+            socket.emit('bgcolor', color);
+
+        }
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -115,6 +131,11 @@
             item.innerHTML = "<strong>" + username + "</strong>: " + msg;
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on('bgcolor', function (color) {
+            document.querySelector('body').style.backgroundColor = color;
+
         });
 
         socket.on('status', function (username, msg) {

@@ -22,6 +22,10 @@ io.on("connection", (socket) => {
     io.emit("status", username, msg);
     //console.log("status: " + username + " is " + msg);
   });
+  socket.on("bgcolor", (color) => {
+    io.emit("bgcolor", color);
+    //console.log("status: " + username + " is " + msg);
+  });
 });
 
 server.listen(3000, () => {
