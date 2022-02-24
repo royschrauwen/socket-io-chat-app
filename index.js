@@ -1,3 +1,6 @@
+// ============================================== //
+//           Definitions and assignments          //
+// ============================================== //
 // Express en SocketIO setup
 const express = require("express");
 const app = express();
@@ -6,9 +9,12 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-// Users
+// Users are stored in a "dictionary"
 let usernameDictionary = {};
-// Dit is een object, dus daar moet ik ook mee leren werken
+
+// ==================================== //
+//           Server en routing          //
+// ==================================== //
 
 // Routing
 app.get("/", (req, res) => {
@@ -16,7 +22,14 @@ app.get("/", (req, res) => {
 });
 app.use(express.static("public"));
 
-// Socket IO Connections
+// Start the server.
+server.listen(3000, () => {
+  console.log("listening on *:3000");
+});
+
+// ======================================== //
+//           Socket IO Connections          //
+// ======================================== //
 io.on("connection", (socket) => {
   addClientToDictionary(socket.id);
 
@@ -45,27 +58,29 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log("listening on *:3000");
-});
-
+// ============================ //
+//           FUNCTIONS          //
+// ============================ //
+// When where is a new user or a user changed their username, we should update the "Dictionary"
 function addClientToDictionary(newId, newName = "") {
   usernameDictionary[newId] = newName;
   updateConnectedUsers();
   console.log(usernameDictionary);
 }
 
+// Here I should remove the ID from the list and update the connected users;
 function removeClientFromDictionary(idToRemove) {
-  // Here I should remove the ID from the list and update the connected users;
   console.log("please remove " + idToRemove + " from connectedusers!");
   deleteFromObject(idToRemove, usernameDictionary);
   updateConnectedUsers();
 }
 
+// There has been an update to the userlist, so emit it to all clients
 function updateConnectedUsers() {
   io.emit("connectedUsers", usernameDictionary);
 }
 
+// A function to remove an item from an object
 function deleteFromObject(keyPart, obj) {
   for (var k in obj) {
     // Loop through the object
