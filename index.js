@@ -10,18 +10,26 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log("User " + socket.id + " connected");
+
+  // A user disconnects
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.log("User " + socket.id + " disconnected");
   });
+
+  // A user sends a chat message
   socket.on("chat message", (username, msg) => {
     io.emit("chat message", username, msg);
     console.log("message: " + msg);
   });
+
+  // A user is typing (make more stati in future)
   socket.on("status", (username, msg) => {
     io.emit("status", username, msg);
     //console.log("status: " + username + " is " + msg);
   });
+
+  // A user clicks a bgcolor-button
   socket.on("bgcolor", (color) => {
     io.emit("bgcolor", color);
     //console.log("status: " + username + " is " + msg);
