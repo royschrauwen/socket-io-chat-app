@@ -14,20 +14,28 @@
 
 <body>
 
+    <!-- When a user first joins, they should pick a room to join -->
     <div class="chooseRoom">
         <form id="joinRoomForm" action="">
             Input Room ID: <input type="text"><button disabled>Join Room</button>
         </form>
     </div>
 
+
+    <!-- When a room has been picked, display the chat -->
     <main>
+
+        <!-- All chatmessages -->
         <ul id="messages"></ul>
 
-        <div id="users">Usernames</div>
+        <!-- A list of connected users -->
+        <ul id="users">Usernames</ul>
 
 
-
+        <!-- Status update -->
         <div id="typing">-</div>
+
+        <!-- Chatmessage input form-->
         <form id="form" action="">
             <input id="input" autocomplete="off" /><button>Send</button>
         </form>
