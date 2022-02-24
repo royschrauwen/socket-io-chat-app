@@ -6,6 +6,7 @@ var socket = io();
 
 let username = "Test user";
 let usernameList = [];
+let userColor = "#000000"; // Maybe each user get's a username in a (random?) color?
 
 let messages = document.getElementById("messages");
 let form = document.getElementById("form");
@@ -92,6 +93,8 @@ input.addEventListener("input", function (e) {
 //           FUNCTIONS          //
 // ============================ //
 
+// ---------- USER FUNCTIONS ---------- //
+
 // The user should be able to change it's username.
 function promptUsername() {
   username = window.prompt("Username", "Roy ");
@@ -102,6 +105,24 @@ function promptUsername() {
 function setUsername(username) {
   socket.emit("setUsername", username);
 }
+
+// Let's visualise a list of all connected users
+// This should be called when the server emits a change regarding users
+function createUsernameList() {
+  document.getElementById("users").textContent = "";
+  for (let i = 0; i < usernameList.length; i++) {
+    if (usernameList[i] != "") {
+      var user = document.createElement("li");
+      // user.classList.add("statusMessage");
+      user.textContent = usernameList[i];
+      document.getElementById("users").appendChild(user);
+    }
+  }
+}
+
+// ---------- ROOM FUNCTIONS ---------- //
+
+function newRoom() {}
 
 // We can create a new room to chat
 function createRoom() {
@@ -123,17 +144,4 @@ function generateId(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
-}
-
-// Let's genvisualise a list of all connected users
-function createUsernameList() {
-  document.getElementById("users").textContent = "";
-  for (let i = 0; i < usernameList.length; i++) {
-    if (usernameList[i] != "") {
-      var user = document.createElement("li");
-      // user.classList.add("statusMessage");
-      user.textContent = usernameList[i];
-      document.getElementById("users").appendChild(user);
-    }
-  }
 }
