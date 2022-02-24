@@ -1,188 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Socket.IO chat</title>
-    <style>
-        /* body {
-            margin: 0;
-            padding-bottom: 3rem;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS | Socket.IO chat</title>
 
-        #form {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 0.25rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            height: 3rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-
-        #input {
-            border: none;
-            padding: 0 1rem;
-            flex-grow: 1;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
-
-        /* #input:focus {
-            outline: none;
-        } */
-
-        #form>button {
-            background: #333;
-            border: none;
-            padding: 0 1rem;
-            margin: 0.25rem;
-            border-radius: 3px;
-            outline: none;
-            color: #fff;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-
-
-
-        #messages>li {
-            padding: 0.5rem 1rem;
-        }
-
-        #messages>li:nth-child(odd) {
-            background: #efefef;
-        }
-
-        #typing {
-
-            background-color: pink;
-        }
-
-        */
-    </style>
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 
+
 <body>
-    <div id="typing">-</div>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
 
-    <button class="clrButton" id="red">Rood</button>
-    <button class="clrButton" id="green">Groen</button>
-    <button class="clrButton" id="blue">Blauw</button>
+    <div class="chooseRoom">
+        <form id="joinRoomForm" action="">
+            Input Room ID: <input type="text"><button disabled>Join Room</button>
+        </form>
+    </div>
 
-    <button class="rankButton" id="client">Client</button>
-    <button class="rankButton" id="Host">Host</button>
+    <main>
+        <ul id="messages"></ul>
+
+        <div id="users">Usernames</div>
+
+
+
+        <div id="typing">-</div>
+        <form id="form" action="">
+            <input id="input" autocomplete="off" /><button>Send</button>
+        </form>
+
+    </main>
+
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="script/script.js"></script>
-    <script>
 
-        // let username = 'Test user';
-
-        // function getUsername() {
-        //     username = window.prompt("Username", "Roy ");
-        // }
-
-        // window.addEventListener('load', getUsername);
-
-        // var socket = io();
-
-        // var messages = document.getElementById('messages');
-        // var form = document.getElementById('form');
-        // var input = document.getElementById('input');
-
-        // const colorButtons = document.querySelectorAll('.clrButton');
-
-        // const clientButton = document.querySelectorAll('.rankButton')[0];
-        // const hostButton = document.querySelectorAll('.rankButton')[1];
-
-        // clientButton.addEventListener('click', joinRoom);
-        // hostButton.addEventListener('click', createRoom);
-
-        // function createRoom() {
-        //     console.log('New Room: ' + generateId(10));
-        // }
-
-        // function joinRoom() {
-        //     console.log('Trying to join room');
-        // }
-
-        // function generateId(length) {
-        //     var result = '';
-        //     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        //     var charactersLength = characters.length;
-        //     for (var i = 0; i < length; i++) {
-        //         result += characters.charAt(Math.floor(Math.random() *
-        //             charactersLength));
-        //     }
-        //     return result;
-        // }
-
-        // colorButtons.forEach(btn => {
-        //     btn.addEventListener('click', () => {
-        //         setBackgroundColor(btn.id);
-        //     });
-        // });
-
-        // function setBackgroundColor(color) {
-        //     //document.querySelector('body').style.backgroundColor = color;
-        //     socket.emit('bgcolor', color);
-
-        // }
-
-        // form.addEventListener('submit', function (e) {
-        //     e.preventDefault();
-        //     if (input.value) {
-        //         socket.emit('chat message', username, input.value);
-        //         socket.emit('status', username, "done");
-        //         input.value = '';
-        //     }
-        // });
-
-        // input.addEventListener('input', function (e) {
-        //     if (!input.value) {
-        //         socket.emit('status', username, "done");
-
-        //     } else {
-        //         socket.emit('status', username, "typing");
-        //     }
-        // })
-
-        // socket.on('chat message', function (username, msg) {
-        //     var item = document.createElement('li');
-        //     item.innerHTML = "<strong>" + username + "</strong>: " + msg;
-        //     messages.appendChild(item);
-        //     window.scrollTo(0, document.body.scrollHeight);
-        // });
-
-        // socket.on('bgcolor', function (color) {
-        //     document.querySelector('body').style.backgroundColor = color;
-
-        // });
-
-        // socket.on('status', function (username, msg) {
-        //     var item = document.getElementById('typing');
-
-        //     if (msg == "done") {
-        //         item.textContent = '';
-        //     } else {
-        //         item.textContent = username + " is " + msg;
-        //     }
-        // });
-    </script>
 </body>
 
 </html>
