@@ -1,3 +1,7 @@
+// ============================================== //
+//           Definitions and assignments          //
+// ============================================== //
+
 var socket = io();
 
 let username = "Test user";
@@ -7,60 +11,12 @@ let messages = document.getElementById("messages");
 let form = document.getElementById("form");
 let input = document.getElementById("input");
 
-// The user should be able to change it's username.
-function promptUsername() {
-  username = window.prompt("Username", "Roy ");
-  setUsername(username);
-}
-
-// We emit the username to the server
-function setUsername(username) {
-  socket.emit("setUsername", username);
-}
-
 // By default we let the user pick a username when the page (re)loads.
 window.addEventListener("load", promptUsername);
 
-// We can create a new room to chat
-function createRoom() {
-  console.log("New Room: " + generateId(10));
-}
-
-// A user should be able to join a given room
-function joinRoom(roomId) {
-  console.log("Trying to join room: " + roomId);
-}
-
-// We sould create a random roomId
-function generateId(length) {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
-
-// The button of the chat-message-input-form
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  if (input.value) {
-    socket.emit("chat message", username, input.value);
-    socket.emit("status", username, "done");
-    input.value = "";
-  }
-});
-
-// When a user is typing, emit this to the server
-input.addEventListener("input", function (e) {
-  if (!input.value) {
-    socket.emit("status", username, "done");
-  } else {
-    socket.emit("status", username, "typing");
-  }
-});
+// ======================================== //
+//           Socket IO Connections          //
+// ======================================== //
 
 // A new message has been emitted from the server.
 // We should display it.
@@ -108,6 +64,66 @@ socket.on("status", function (username, msg) {
     item.textContent = username + " is " + msg;
   }
 });
+
+// =================================== //
+//           Form interaction          //
+// =================================== //
+
+// The button of the chat-message-input-form
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (input.value) {
+    socket.emit("chat message", username, input.value);
+    socket.emit("status", username, "done");
+    input.value = "";
+  }
+});
+
+// When a user is typing, emit this to the server
+input.addEventListener("input", function (e) {
+  if (!input.value) {
+    socket.emit("status", username, "done");
+  } else {
+    socket.emit("status", username, "typing");
+  }
+});
+
+// ============================ //
+//           FUNCTIONS          //
+// ============================ //
+
+// The user should be able to change it's username.
+function promptUsername() {
+  username = window.prompt("Username", "Roy ");
+  setUsername(username);
+}
+
+// We emit the username to the server
+function setUsername(username) {
+  socket.emit("setUsername", username);
+}
+
+// We can create a new room to chat
+function createRoom() {
+  console.log("New Room: " + generateId(10));
+}
+
+// A user should be able to join a given room
+function joinRoom(roomId) {
+  console.log("Trying to join room: " + roomId);
+}
+
+// We sould create a random roomId
+function generateId(length) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 // Let's genvisualise a list of all connected users
 function createUsernameList() {
