@@ -117,6 +117,9 @@ function getUsername() {
 function promptUsername() {
   // TODO: Use something better than window.prompt please
   username = window.prompt("Username", "Roy ");
+  // TODO: Check if username already exists
+  // Maybe creating an account is better
+  // A good reason to try OAuth?
   saveUsernameToLocalStorage();
 }
 
