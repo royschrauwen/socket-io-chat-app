@@ -12,6 +12,8 @@ let messages = document.getElementById("messages");
 let form = document.getElementById("form");
 let input = document.getElementById("input");
 
+const roomIDContainer = document.getElementById("#roomID");
+
 // By default we let the user pick a username when the page (re)loads.
 window.addEventListener("load", () => {
   getUsername();
@@ -144,11 +146,15 @@ function joinRoom(roomID) {
 
   // 1. Save current chat to localstorage. Use roomID as key.
   saveChatToLocalStorage();
+
   // 2. Clear current chat from screen
+  messages.innerText = "";
 
   // 3. Clear userlist
+  document.getElementById("users").textContent = "";
 
   // 4. Show roomID on screen
+  roomIDContainer.textContent = roomID;
 
   // 5. Show new userlist on screen
 
