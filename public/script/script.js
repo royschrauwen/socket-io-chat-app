@@ -138,16 +138,28 @@ function createUsernameList() {
 
 // ---------- ROOM FUNCTIONS ---------- //
 
-function newRoom() {}
+// A user should be able to join a given room
+function joinRoom(roomID) {
+  console.log("Trying to join room: " + roomID);
 
-// We can create a new room to chat
-function createRoom() {
-  console.log("New Room: " + generateId(10));
+  // 1. Save current chat to localstorage. Use roomID as key.
+  saveChatToLocalStorage();
+  // 2. Clear current chat from screen
+
+  // 3. Clear userlist
+
+  // 4. Show roomID on screen
+
+  // 5. Show new userlist on screen
+
+  // 6. Show chatmessage notifying the new room
 }
 
-// A user should be able to join a given room
-function joinRoom(roomId) {
-  console.log("Trying to join room: " + roomId);
+// We can create a new room to chat
+function createRoomID() {
+  let newID = generateId(10);
+  console.log("New RoomID: " + newID);
+  return newID;
 }
 
 // We sould create a random roomId
