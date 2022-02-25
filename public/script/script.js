@@ -28,6 +28,7 @@ window.addEventListener("load", () => {
 // We should display it.
 socket.on("chat message", function (username, msg) {
   var item = document.createElement("li");
+  // Does a username have a color? If so, this is the place to append it
   item.innerHTML = "<strong>" + username + "</strong>: " + msg;
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
