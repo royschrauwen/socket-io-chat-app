@@ -107,7 +107,7 @@ function getUsername() {
   } else {
     username = loadUsernameFromLocalStorage();
   }
-  setUsername(username);
+  emitUsernameToServer(username);
 }
 
 // The user should be able to change it's username.
@@ -118,7 +118,7 @@ function promptUsername() {
 }
 
 // We emit the username to the server
-function setUsername(username) {
+function emitUsernameToServer(username) {
   socket.emit("setUsername", username);
 }
 
