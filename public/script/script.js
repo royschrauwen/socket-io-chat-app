@@ -13,7 +13,10 @@ let form = document.getElementById("form");
 let input = document.getElementById("input");
 
 // By default we let the user pick a username when the page (re)loads.
-window.addEventListener("load", promptUsername);
+window.addEventListener("load", () => {
+  getUsername();
+  loadChatFromLocalStorage();
+});
 
 // ======================================== //
 //           Socket IO Connections          //
@@ -26,6 +29,7 @@ socket.on("chat message", function (username, msg) {
   item.innerHTML = "<strong>" + username + "</strong>: " + msg;
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
+  saveChatToLocalStorage();
 });
 
 // A new user has been emitted from the server
@@ -95,10 +99,22 @@ input.addEventListener("input", function (e) {
 
 // ---------- USER FUNCTIONS ---------- //
 
+// We try to get the usernam from localstorage, otherwise prompt for a username
+// TODO: I think the below function can be writter better. Think about it...
+function getUsername() {
+  if (!loadUsernameFromLocalStorage()) {
+    promptUsername();
+  } else {
+    username = loadUsernameFromLocalStorage();
+  }
+  setUsername(username);
+}
+
 // The user should be able to change it's username.
 function promptUsername() {
+  // TODO: Use something better than window.prompt please
   username = window.prompt("Username", "Roy ");
-  setUsername(username);
+  saveUsernameToLocalStorage();
 }
 
 // We emit the username to the server
@@ -113,7 +129,7 @@ function createUsernameList() {
   for (let i = 0; i < usernameList.length; i++) {
     if (usernameList[i] != "") {
       var user = document.createElement("li");
-      // user.classList.add("statusMessage");
+      // user.classList.add("statusMessage"); // Maybe I can make something else for this
       user.textContent = usernameList[i];
       document.getElementById("users").appendChild(user);
     }
@@ -144,4 +160,33 @@ function generateId(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+
+// ---------- CHAT FUNCTIONS ---------- //
+
+function loadUsernameFromLocalStorage() {
+  if (localStorage.getItem("username")) {
+    return localStorage.getItem("username");
+  }
+}
+
+function saveUsernameToLocalStorage() {
+  localStorage.setItem("username", username);
+  // localStorage.setItem('user', JSON.stringify(user));
+}
+
+function loadChatFromLocalStorage() {
+  // var user = JSON.parse(localStorage.getItem('user'));
+  console.log(username);
+}
+
+// Chat messages should be saved to localStorage
+function saveChatToLocalStorage() {
+  localStorage.setItem("username", username);
+  // localStorage.setItem('user', JSON.stringify(user));
+}
+
+// This clears the chat from localStorage
+function clearChatFromLocalStorage() {
+  localStorage.clear();
 }
